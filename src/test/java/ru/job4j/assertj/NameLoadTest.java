@@ -21,12 +21,26 @@ class NameLoadTest {
     }
 
     @Test
-    void checkValidate() {
+    void checkContains() {
         NameLoad nameLoad = new NameLoad();
         assertThatThrownBy(() -> nameLoad.parse("key:value"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("the symbol")
-                .hasMessageContaining("key")
+                .hasMessageContaining("the symbol");
+    }
+
+    @Test
+    void checkStartsWith() {
+        NameLoad nameLoad = new NameLoad();
+        assertThatThrownBy(() -> nameLoad.parse("=key"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("key");
+    }
+
+    @Test
+    void checkEndWith() {
+        NameLoad nameLoad = new NameLoad();
+        assertThatThrownBy(() -> nameLoad.parse("key="))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("value");
     }
 }
