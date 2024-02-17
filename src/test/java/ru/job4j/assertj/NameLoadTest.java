@@ -15,10 +15,18 @@ class NameLoadTest {
     @Test
     void checkParse() {
         NameLoad nameLoad = new NameLoad();
-        String names = "Ivan:man";
-        assertThatThrownBy(() -> nameLoad.parse(names))
+        assertThatThrownBy(nameLoad::parse)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(names);
+                .hasMessageContaining("empty");
     }
 
+    @Test
+    void checkValidate() {
+        NameLoad nameLoad = new NameLoad();
+        assertThatThrownBy(() -> nameLoad.parse("key:value"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("the symbol")
+                .hasMessageContaining("key")
+                .hasMessageContaining("value");
+    }
 }
