@@ -12,11 +12,11 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         container = (T[]) new Object[capacity];
     }
 
-    private void ensureCapacity(int minCapacity) {
-        if (minCapacity > container.length) {
+    private void ensureCapacity() {
+        if (size == container.length) {
             int newCapacity = container.length * 2;
-            if (newCapacity < minCapacity) {
-                newCapacity = minCapacity;
+            if (size == 0) {
+                newCapacity = 1;
             }
             container = Arrays.copyOf(container, newCapacity);
         }
@@ -24,7 +24,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     @Override
     public void add(T value) {
-        ensureCapacity(size + 1);
+        ensureCapacity();
         container[size++] = value;
         modCount++;
     }
