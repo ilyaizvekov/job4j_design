@@ -30,6 +30,9 @@ public class Config {
                 }
                 String key = line.substring(0, equalsIndex).trim();
                 String value = line.substring(equalsIndex + 1).trim();
+                if (key.isEmpty() || value.isEmpty()) {
+                    throw new IllegalArgumentException("Invalid format in line: " + line);
+                }
                 values.put(key, value);
             }
         } catch (IOException e) {

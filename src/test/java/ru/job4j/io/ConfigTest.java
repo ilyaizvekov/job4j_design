@@ -21,4 +21,43 @@ class ConfigTest {
         assertThat(config.value("name")).isEqualTo("Petr Arsentev");
     }
 
+    @Test
+    void whenEqValueThenThrowException() {
+        String path = "./data/pair_with_eq_value.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Invalid format in line: ");
+    }
+
+    @Test
+    void whenKeyEqThenThrowException() {
+        String path = "./data/pair_with_key_eq.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Invalid format in line: ");
+    }
+
+    @Test
+    void whenEqThenThrowException() {
+        String path = "./data/pair_with_eq.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Invalid format in line: ");
+    }
+
+    @Test
+    void whenKeyEqValueEqValue() {
+        String path = "data/pair_with_key_eq_value_eq_value.properties";
+        Config config = new Config(path);
+        config.load();
+        assertThat(config.value("key")).isEqualTo("value=1");
+    }
+
+    @Test
+    void whenKeyEqValueEq() {
+        String path = "data/pair_with_key_eq_value_eq.properties";
+        Config config = new Config(path);
+        config.load();
+        assertThat(config.value("key")).isEqualTo("value=");
+    }
 }
