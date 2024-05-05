@@ -23,6 +23,9 @@ public class Search {
         if (!file.isDirectory()) {
             throw new IllegalArgumentException(String.format("Not directory %s", args[0]));
         }
+        if (!".js".contains(args[1])) {
+            throw new IllegalArgumentException(String.format("Not contains %s", args[1]));
+        }
     }
 
     public static List<Path> search(Path root, Predicate<Path> condition) throws IOException {
