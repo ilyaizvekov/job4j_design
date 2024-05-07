@@ -16,14 +16,14 @@ public class Search {
     }
 
     public static void validate(String[] args) {
-        if (args.length == 0) {
+        if (args.length != 2) {
             throw new IllegalArgumentException("Root folder is null. Usage  ROOT_FOLDER.");
         }
         File file = new File(args[0]);
         if (!file.isDirectory()) {
             throw new IllegalArgumentException(String.format("Not directory %s", args[0]));
         }
-        if (!".js".contains(args[1])) {
+        if (!args[1].startsWith(".") && !"ab".contains(args[1])) {
             throw new IllegalArgumentException(String.format("Not contains %s", args[1]));
         }
     }
