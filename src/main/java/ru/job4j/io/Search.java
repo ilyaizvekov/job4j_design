@@ -23,7 +23,7 @@ public class Search {
         if (!file.isDirectory()) {
             throw new IllegalArgumentException(String.format("Not directory %s", args[0]));
         }
-        if (!args[1].startsWith(".") && !"ab".contains(args[1])) {
+        if (!args[1].startsWith(".") && args[1].length() >= 2) {
             throw new IllegalArgumentException(String.format("Not contains %s", args[1]));
         }
     }
