@@ -20,24 +20,21 @@ public class ArgsName {
         String[] array;
         for (String arg : args) {
             array = arg.split("=", 2);
-            if ("-".equals(array[0])) {
-                throw new IllegalArgumentException("Error: This argument '" + arg + "' does not contain a key");
-            }
-            if (array[1].isBlank()) {
-                throw new IllegalArgumentException("Error: This argument '" + arg + "' does not contain a value");
-            }
-            if (array.length != 2) {
-                throw new IllegalArgumentException("Incurrent number of argument");
-            }
             values.put(array[0].substring(1), array[1]);
         }
     }
 
-    public static ArgsName of(String[] args) {
+    private static void validate(String[] args) {
         if (args.length == 0) {
             throw new IllegalArgumentException("Arguments not passed to program");
         }
         for (String arg : args) {
+            if (arg.charAt(0) == '-' && arg.charAt(1) == '=') {
+                throw new IllegalArgumentException("Error: This argument '" + arg + "' does not contain a key");
+            }
+            if (arg.indexOf('=') == arg.lastIndexOf('=') && arg.endsWith("=")) {
+                throw new IllegalArgumentException("Error: This argument '" + arg + "' does not contain a value");
+            }
             if (!arg.startsWith("-")) {
                 throw new IllegalArgumentException("Error: This argument '" + arg
                         + "' does not start with a '-' character\"");
@@ -47,6 +44,10 @@ public class ArgsName {
                         + "' does not contain an equal sign");
             }
         }
+    }
+
+    public static ArgsName of(String[] args) {
+        validate(args);
         ArgsName names = new ArgsName();
         names.parse(args);
         return names;
