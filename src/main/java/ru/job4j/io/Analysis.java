@@ -24,7 +24,7 @@ public class Analysis {
              } else if (isUnavailable && (status.equals("200") || status.equals("300"))) {
                  isUnavailable = false;
                  endTime = time;
-                 output.write(startTime + ";" + endTime + ";\n");
+                 output.write(String.format("%s; %s;\n", startTime, endTime));
              }
 
              }
